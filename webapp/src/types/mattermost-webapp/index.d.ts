@@ -3,13 +3,13 @@
 
 /* eslint-disable max-lines */
 
-import type {Reducer} from 'redux';
+import type { Reducer, Action } from 'redux';
 
-import type {WebSocketMessage} from '@mattermost/client';
-import type {Channel} from '@mattermost/types/channels';
-import type {FileInfo} from '@mattermost/types/files';
-import type {Post, PostEmbed} from '@mattermost/types/posts';
-import type {ProductScope} from '@mattermost/types/products';
+import type { WebSocketMessage } from '@mattermost/client';
+import type { Channel } from '@mattermost/types/channels';
+import type { FileInfo } from '@mattermost/types/files';
+import type { Post, PostEmbed } from '@mattermost/types/posts';
+import type { ProductScope } from '@mattermost/types/products';
 
 export type UniqueIdentifier = string;
 export type ReactResolvable = React.ReactNode | React.ElementType;
@@ -110,7 +110,7 @@ export type PluginConfigurationSection = {
      * so use this function only in case you want to add some side effect
      * to the change.
     */
-    onSubmit?: (changes: {[name: string]: string}) => void;
+    onSubmit?: (changes: { [name: string]: string }) => void;
 }
 
 export type PluginConfigurationCustomSection = {
@@ -678,9 +678,9 @@ export interface PluginRegistry {
     */
     registerMessageWillBePostedHook(
         ...args: [
-            hook: (post: Post) => ({ post: Post } | {error: { message: string }} | Promise<{ post: Post } | { error: { message: string } }>)
+            hook: (post: Post) => ({ post: Post } | { error: { message: string } } | Promise<{ post: Post } | { error: { message: string } }>)
         ] | [{
-            hook: (post: Post) => ({ post: Post } | {error: { message: string }} | Promise<{ post: Post } | { error: { message: string } }>);
+            hook: (post: Post) => ({ post: Post } | { error: { message: string } } | Promise<{ post: Post } | { error: { message: string } }>);
         }]
     ): UniqueIdentifier;
 
@@ -741,7 +741,7 @@ export interface PluginRegistry {
     registerFilePreviewComponent(
         ...args: [
             override: (fileInfos: FileInfo[], post: Post) => boolean,
-                    component: ReactResolvable
+            component: ReactResolvable
         ] | [{
             override: (fileInfos: FileInfo[], post: Post) => boolean;
             component: ReactResolvable;
@@ -839,9 +839,9 @@ export interface PluginRegistry {
         }]
     ): {
         id: UniqueIdentifier;
-        showRHSPlugin: object;
-        hideRHSPlugin: object;
-        toggleRHSPlugin: object;
+        showRHSPlugin: Action<Record<string, unknown>>;
+        hideRHSPlugin: Action<Record<string, unknown>>;
+        toggleRHSPlugin: Action<Record<string, unknown>>;
     };
 
     /**
@@ -865,7 +865,7 @@ export interface PluginRegistry {
     registerCustomRoute(
         ...args: [
             route: string,
-                    component: ReactResolvable
+            component: ReactResolvable
         ] | [{
             route: string;
             component: ReactResolvable;
